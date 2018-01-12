@@ -1,0 +1,133 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name='viewport' conent='width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no' />
+<meta name="keywords" content="文件上传,文件显示" />
+<meta name="description" content="文件上传并显示" />
+<title>Picture UpLoad</title>
+<p align="center" style="margin-top:50px">
+<font size="5"> Please upload your picture here(picture.jpg): </font>
+</p>
+<style type='text/css' rel='stylesheet'>
+
+	*{ margin:0; padding:0;}
+	ul{ width:45%; border:solid 3px skyBlue; float:left; }
+	ul li{ border-bottom:solid 1px gray ; list-style:inside decimal;}
+	
+	ul li:hover{background:lightGray;}
+	
+</style>
+</head>
+
+<body style="padding: 10px" background="/static/img/Upload.jpg">
+	<div style="margin-left:850px; margin-top:50px">
+	<form action='' method='post' name='myform'>
+		<input type='file' id='iptfileupload' onchange='show()' value='' />
+	</form>
+	</div>
+	<script type="text/javascript">
+        function getPath(obj,fileQuery,transImg) {
+
+            var imgSrc = '', imgArr = [], strSrc = '' ;
+
+            if(window.navigator.userAgent.indexOf("MSIE")>=1){  
+                if(obj.select){
+                    obj.select();
+                    var path=document.selection.createRange().text;
+                    alert(path);
+                    obj.removeAttribute("src");
+                    imgSrc = fileQuery.value ;
+                    imgArr = imgSrc.split('.') ;
+                    strSrc = imgArr[imgArr.length - 1].toLowerCase() ;
+                    if(strSrc.localeCompare('jpg') === 0 || strSrc.localeCompare('jpeg') === 0 || strSrc.localeCompare('gif') === 0 || strSrc.localeCompare('png') === 0){
+                        obj.setAttribute("src",transImg);
+                        obj.style.filter=
+                            "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+path+"', sizingMethod='scale');"; 
+                    }else{
+                        throw new Error('File type Error! please image file upload..');                       
+                    }
+                }else{
+                    imgSrc = fileQuery.value;
+                    imgArr = imgSrc.split('.');
+                    strSrc = imgArr[imgArr.length - 1].toLowerCase();
+                    if(strSrc.localeCompare('jpg') === 0 || strSrc.localeCompare('jpeg') === 0 || strSrc.localeCompare('gif') === 0 || strSrc.localeCompare('png') === 0){
+                        obj.src = fileQuery.value ;
+                    }else{
+                        throw new Error('File type Error! please image file upload..');                   
+                    }
+                }
+            } else{
+                var file =fileQuery.files[0];
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    imgSrc = fileQuery.value;
+                    imgArr = imgSrc.split('.') ;
+                    strSrc = imgArr[imgArr.length - 1].toLowerCase();
+                    if(strSrc.localeCompare('jpg') === 0 || strSrc.localeCompare('jpeg') === 0 || strSrc.localeCompare('gif') === 0 || strSrc.localeCompare('png') === 0){
+                        obj.setAttribute("src", e.target.result) ;
+                    }else{
+                        throw new Error('File type Error! please image file upload..');
+                    }
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function show(){
+            var file_img=document.getElementById("img"),
+                iptfileupload = document.getElementById('iptfileupload');
+            getPath(file_img,iptfileupload,file_img);
+        }
+
+	function Download(){
+            var type ='png';
+            var d=document.getElementById("myCanvas");
+            var imgdata=d.toDataURL(type);
+            var fixtype=function(type){
+                type=type.toLocaleLowerCase().replace(/jpg/i,'jpeg');
+                var r=type.match(/png|jpeg|bmp|gif/)[0];
+                return 'image/'+r;
+            }
+            imgdata=imgdata.replace(fixtype(type),'image/octet-stream');
+            var saveFile=function(data,filename)
+            {
+                var save_link=document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+                save_link.href=data;
+                save_link.download=filename;
+                var event=document.createEvent('MouseEvents');
+                event.initMouseEvent('click',true,false,window,0,0,0,0,0,false,false,false,false,0,null);
+                save_link.dispatchEvent(event);
+            }
+            var filename='picture'+'.'+type;  
+            saveFile(imgdata,filename);
+        }
+    </script>
+
+    <script type="text/javascript">
+	var c=document.getElementById("myCanvas");
+	var cxt=c.getContext("2d");
+	var img=new Image()
+	img.src=""
+	image.onload = function(){cxt.drawImage(img,0,0)}
+    </script>
+
+    <div align="center">
+	<img src='' alt='' id='img'>
+    </div>
+
+    <form>
+    <div align="center"">
+    <input type="button" id="btnsavaImg" value="下一步" onclick="javascript:location.href='/v'"/>
+    </div>
+    </form>
+
+</body>
+</html>
+
+
+
+
+
+
+

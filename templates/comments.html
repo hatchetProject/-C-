@@ -1,0 +1,40 @@
+$def with(res)
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="http://www.webkfa.com/" />
+<title>Comments For This Product</title>
+<style type="text/css">
+*{
+margin:0;padding:0;
+-webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
+-webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
+-webkit-tap-highlight-color: rgba(210,210,210,0.35); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+-webkit-user-select: none; /* prevent copy paste, to allow, change 'none' to 'text' */
+}
+body{font-family:"微软雅黑";font-size:12px;}
+ul,li{list-style:none;}
+.ylcon{width:100%;min-width:320px;}
+.tit{height:60px;line-height:60px;padding:75px 800px;position:relative;font-size:45px;color:rgb(63, 117, 121);border-bottom:1px solid rgba(0, 0, 0, 0.15);}
+.story{border-bottom:1px dashed #cecece;padding:0 15px 3px;position:relative;}
+.story_m{color:rgba(110,110,110,1);line-height:30px;word-break:break-all;word-wrap:break-word;overflow:hidden;font-size:22px;padding:2px 40px;}
+.opbtn{position:absolute;top: 0;right: 0;}
+</style>
+</head>
+<body background="static/img/CommentBackground.jpg">
+<div class="ylcon">
+<p class="tit">
+大众评论
+</p>
+$for i in range(len(res)):
+    <div id="messDivId">
+    <div class="story">
+    <div class="opbtn"></div>
+    <p class="story_m">$res[i]</p>
+    </div>
+    </div> 
+    </div>
+</body>
+</html>

@@ -1,0 +1,218 @@
+$def with(ColorList, TList, nameList, rList, gList, bList, cList)
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+</head>
+<body>
+<div align="center">
+<p>
+<font size="10" face="Georgia">
+Matched Results
+</p>
+</div>
+<div align="center">
+<img src="/static/img/picture.jpg" height="385px" width="250px"/>
+</div>
+<div align="center">
+<img src="/static/img/bracket.png"/>
+</div>
+<p>
+$for i in range(len(ColorList)):
+    <img src="$ColorList[i]" height="75px" width="75px" style="margin-left:235px"/>
+</p>
+<p>
+    <img src="$TList[0]" height="300px" width="260px" style="margin-left:150px" />
+$for i in range(1, 4):
+    <img src="$TList[i]" height="300px" width="260px" style="margin-left:55px" />
+<img src="$TList[4]" height="300px" width="260px" style="margin-right:10px" />
+</p>
+<p>
+$for i in range(5):
+    <font size="4" style="margin-left:250px">$cList[i]</font>
+</p>
+
+<p>
+$for i in range(5):
+    <font size="4" style="margin-left:130px">$nameList[i]</font>
+</p>
+
+<div align="center"><font size="5">Do makeup for yourself! UpLoad your picture here:(user.jpg)</font></div>
+	<div style="margin-left:875px">
+	<form action='' method='post' name='myform'>
+		<input type='file' id='iptfileupload' onchange='show()' value='' />
+	</form>
+	</div>
+	<script type="text/javascript">
+        function getPath(obj,fileQuery,transImg) {
+
+            var imgSrc = '', imgArr = [], strSrc = '' ;
+
+            if(window.navigator.userAgent.indexOf("MSIE")>=1){  
+                if(obj.select){
+                    obj.select();
+                    var path=document.selection.createRange().text;
+                    alert(path);
+                    obj.removeAttribute("src");
+                    imgSrc = fileQuery.value ;
+                    imgArr = imgSrc.split('.') ;
+                    strSrc = imgArr[imgArr.length - 1].toLowerCase() ;
+                    if(strSrc.localeCompare('jpg') === 0 || strSrc.localeCompare('jpeg') === 0 || strSrc.localeCompare('gif') === 0 || strSrc.localeCompare('png') === 0){
+                        obj.setAttribute("src",transImg);
+                        obj.style.filter=
+                            "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+path+"', sizingMethod='scale');"; 
+                    }else{
+                        throw new Error('File type Error! please image file upload..');                       
+                    }
+                }else{
+                    imgSrc = fileQuery.value;
+                    imgArr = imgSrc.split('.');
+                    strSrc = imgArr[imgArr.length - 1].toLowerCase();
+                    if(strSrc.localeCompare('jpg') === 0 || strSrc.localeCompare('jpeg') === 0 || strSrc.localeCompare('gif') === 0 || strSrc.localeCompare('png') === 0){
+                        obj.src = fileQuery.value ;
+                    }else{
+                        throw new Error('File type Error! please image file upload..');                   
+                    }
+                }
+            } else{
+                var file =fileQuery.files[0];
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    imgSrc = fileQuery.value;
+                    imgArr = imgSrc.split('.') ;
+                    strSrc = imgArr[imgArr.length - 1].toLowerCase();
+                    if(strSrc.localeCompare('jpg') === 0 || strSrc.localeCompare('jpeg') === 0 || strSrc.localeCompare('gif') === 0 || strSrc.localeCompare('png') === 0){
+                        obj.setAttribute("src", e.target.result) ;
+                    }else{
+                        throw new Error('File type Error! please image file upload..');
+                    }
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function show(){
+            var file_img=document.getElementById("img"),
+                iptfileupload = document.getElementById('iptfileupload');
+            getPath(file_img,iptfileupload,file_img);
+        }
+
+	function Download(){
+            var type ='png';
+            var d=document.getElementById("myCanvas");
+            var imgdata=d.toDataURL(type);
+            var fixtype=function(type){
+                type=type.toLocaleLowerCase().replace(/jpg/i,'jpeg');
+                var r=type.match(/png|jpeg|bmp|gif/)[0];
+                return 'image/'+r;
+            }
+            imgdata=imgdata.replace(fixtype(type),'image/octet-stream');
+            var saveFile=function(data,filename)
+            {
+                var save_link=document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+                save_link.href=data;
+                save_link.download=filename;
+                var event=document.createEvent('MouseEvents');
+                event.initMouseEvent('click',true,false,window,0,0,0,0,0,false,false,false,false,0,null);
+                save_link.dispatchEvent(event);
+            }
+            var filename='picture'+'.'+type;  
+            saveFile(imgdata,filename);
+        }
+    </script>
+
+    <script type="text/javascript">
+	var c=document.getElementById("myCanvas");
+	var cxt=c.getContext("2d");
+	var img=new Image()
+	img.src=""
+	image.onload = function(){cxt.drawImage(img,0,0)}
+    </script>
+
+    <div align="center">
+	<img src='' alt='' id='img' height="385px" width="250px">
+    </div>
+<style>
+.button0 {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button0 span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button0 span:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button0:hover span {
+  padding-right: 25px;
+}
+
+.button0:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+</style>
+<button class="button0" type="button" style="margin-left:170px" onclick="javascript:window.location.href='/d?r=$rList[0]&g=$gList[0]&b=$bList[0]'"> Try Product A </button>
+<button class="button0" type="button" style="margin-left:110px" onclick="javascript:window.location.href='/d?r=$rList[1]&g=$gList[1]&b=$bList[1]'"> Try Product B </button>
+<button class="button0" type="button" style="margin-left:120px" onclick="javascript:window.location.href='/d?r=$rList[2]&g=$gList[2]&b=$bList[2]'"> Try Product C </button>
+<button class="button0" type="button" style="margin-left:120px" onclick="javascript:window.location.href='/d?r=$rList[3]&g=$gList[3]&b=$bList[3]'"> Try Product D </button>
+<button class="button0" type="button" style="margin-left:100px" onclick="javascript:window.location.href='/d?r=$rList[4]&g=$gList[4]&b=$bList[4]'"> Try Product E </button>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
